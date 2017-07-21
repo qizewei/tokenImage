@@ -109,7 +109,6 @@ public class tankImageView extends ImageView {
         mPaint.setTextSize(mTitleTextSize);
         mPaint.setColor(mTextColor);
         mBound = new Rect();
-        mPaint.getTextBounds(mText, 0, mText.length(), mBound);
     }
 
     public void setText(String mText) {
@@ -179,8 +178,10 @@ public class tankImageView extends ImageView {
             canvas.drawBitmap(mImage, null, rect, mPaint);
         }
 
-        //绘制文字
-        canvas.drawText(mText, mProgress, getHeight() / 2 + mBound.height() / 2, mPaint);
+        if (mText != null) {
+            //绘制文字
+            canvas.drawText(mText, mProgress, getHeight() / 2 + mBound.height() / 2, mPaint);
+        }
 
     }
 

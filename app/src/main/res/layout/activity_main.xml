@@ -12,7 +12,7 @@
         android:layout_width="368dp"
         android:layout_height="200dp"
         app:image="@drawable/background"
-        app:text="3712"
+
         app:textColor="#fff"
         app:speed="3"
         app:textSize="20sp" />
