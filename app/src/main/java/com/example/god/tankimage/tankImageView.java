@@ -110,7 +110,7 @@ public class tankImageView extends ImageView {
                         }
                     }
                     if (isTurn) {
-                        mProgress = 0;
+                        mProgress = -400;
                         for (int i = 0; i < mData.size(); i++) {
                             mData.get(i).setEnd(false);
                         }
