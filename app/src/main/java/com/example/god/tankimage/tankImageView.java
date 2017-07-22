@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import java.util.Random;
  * Created by god on 2017/7/21.
  */
 
-public class tankImageView extends ImageView {
+public class tankImageView extends View {
     private static final String TAG = "tankImageView";
     /**
      * 绘制时控制文本绘制的范围
@@ -31,7 +32,7 @@ public class tankImageView extends ImageView {
     private Rect mBound;
     private Paint mPaint;
     private int mSpeed = 3;
-    private int mProgress = -400;
+    private int mProgress = -700;
 
     private int mWidth;
     private int mHeight;
@@ -41,7 +42,6 @@ public class tankImageView extends ImageView {
     private static final int IMAGE_SCALE_FITXY = 0;
     private static final int IMAGE_SCALE_CENTER = 1;
 
-    private String mText;
     private List<String> mLists;
     private List<dataBean> mData;
     private int mTextColor;
@@ -61,6 +61,7 @@ public class tankImageView extends ImageView {
         super(context, attrs, defStyleAttr);
         mData = new ArrayList<>();
 
+        //遍历获取XML参数
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.tankImageView, defStyleAttr, 0);
         int n = a.getIndexCount();
         for (int i = 0; i < n; i++) {
@@ -72,9 +73,6 @@ public class tankImageView extends ImageView {
                 case R.styleable.tankImageView_imageScaleType:
                     mImageScale = a.getInt(attr, 0);
                     break;
-                case R.styleable.tankImageView_text:
-                    mText = a.getString(attr);
-                    break;
                 case R.styleable.tankImageView_textColor:
                     mTextColor = a.getColor(attr, Color.WHITE);
                     break;
@@ -85,11 +83,9 @@ public class tankImageView extends ImageView {
                     mSpeed = a.getInteger(attr, 3);
                     break;
             }
-
         }
 
         a.recycle();
-
         /**
          * 获得绘制文本的宽和高
          */
@@ -103,14 +99,16 @@ public class tankImageView extends ImageView {
             public void run() {
                 while (true) {
                     mProgress++;
+                    //单次播放完成判断
                     isTurn = true;
                     for (int i = 0; i < mData.size(); i++) {
                         if (!mData.get(i).isEnd()) {
                             isTurn = false;
                         }
                     }
+                    //开启循环
                     if (isTurn) {
-                        mProgress = -400;
+                        mProgress = -700;
                         for (int i = 0; i < mData.size(); i++) {
                             mData.get(i).setEnd(false);
                         }
@@ -126,29 +124,22 @@ public class tankImageView extends ImageView {
 
             ;
         }.start();
-
-
     }
-
-    public void setText(String mText) {
-        this.mText = mText;
-    }
-
 
     public void setLists(List<String> mLists) {
         this.mLists = mLists;
+        //遍历整理数组
         int num = 0;
         for (int i = 0; i < mLists.size(); i++) {
             double random = Math.random();
             Log.d(TAG, "setLists: " + random);
-            num -= (int) (random * 300);
-
+            //调整条目间隔
+            num -= (int) (random * 200) + 300;
             if (i == 0)
                 mData.add(new dataBean(mLists.get(i), -mBound.width(), (int) (random * 3), false));
             else
                 mData.add(new dataBean(mLists.get(i), num, (int) (random * 3), false));
         }
-        Log.d(TAG, "setLists: " + mData.size());
     }
 
     @Override
@@ -215,12 +206,6 @@ public class tankImageView extends ImageView {
             rect.bottom = (mHeight - mBound.height()) / 2 + mImage.getHeight() / 2;
             canvas.drawBitmap(mImage, null, rect, mPaint);
         }
-
-        if (mText != null) {
-            //绘制文字
-            canvas.drawText(mText, mProgress, getHeight() / 2 + mBound.height() / 2, mPaint);
-        }
-
         if (mData.size() != 0) {
             for (int i = 0; i < mData.size(); i++) {
                 if (!mData.get(i).isEnd()) {
@@ -228,6 +213,7 @@ public class tankImageView extends ImageView {
                     if (progress >= mWidth - getPaddingRight()) {
                         mData.get(i).setEnd(true);
                     }
+                    //canvas.drawText(mText, mProgress, getHeight() / 2 + mBound.height() / 2, mPaint);
                     canvas.drawText(mData.get(i).getString(), progress, +itemHeight * mData.get(i).getCount() + 100, mPaint);
                 }
             }
