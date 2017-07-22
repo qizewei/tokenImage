@@ -31,22 +31,21 @@ public class tankImageView extends View {
      */
     private Rect mBound;
     private Paint mPaint;
-    private int mSpeed = 3;
-    private int mProgress = -700;
-
+    private Rect rect;
     private int mWidth;
     private int mHeight;
 
+    private int mSpeed;
+    private int mProgress;
     private Bitmap mImage;
     private int mImageScale;
     private static final int IMAGE_SCALE_FITXY = 0;
     private static final int IMAGE_SCALE_CENTER = 1;
-
-    private List<String> mLists;
-    private List<dataBean> mData;
     private int mTextColor;
     private int mTitleTextSize;
-    private Rect rect;
+    private boolean mRepeat;
+
+    private List<dataBean> mData;
     private boolean isTurn;
 
     public tankImageView(Context context) {
@@ -77,10 +76,16 @@ public class tankImageView extends View {
                     mTextColor = a.getColor(attr, Color.WHITE);
                     break;
                 case R.styleable.tankImageView_textSize:
-                    mTitleTextSize = a.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics()));
+                    mTitleTextSize = a.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, getResources().getDisplayMetrics()));
                     break;
                 case R.styleable.tankImageView_speed:
                     mSpeed = a.getInteger(attr, 3);
+                    break;
+                case R.styleable.tankImageView_progress:
+                    mProgress = -1 * a.getInteger(attr, 700);
+                    break;
+                case R.styleable.tankImageView_repeat:
+                    mRepeat = a.getBoolean(attr,true);
                     break;
             }
         }
@@ -107,7 +112,7 @@ public class tankImageView extends View {
                         }
                     }
                     //开启循环
-                    if (isTurn) {
+                    if (isTurn && mRepeat) {
                         mProgress = -700;
                         for (int i = 0; i < mData.size(); i++) {
                             mData.get(i).setEnd(false);
@@ -127,7 +132,6 @@ public class tankImageView extends View {
     }
 
     public void setLists(List<String> mLists) {
-        this.mLists = mLists;
         //遍历整理数组
         int num = 0;
         for (int i = 0; i < mLists.size(); i++) {
@@ -186,7 +190,7 @@ public class tankImageView extends View {
     protected void onDraw(Canvas canvas) {
         int itemHeight = getHeight() / 3;
 
-        mPaint.setColor(Color.YELLOW);
+        mPaint.setColor(Color.BLACK);
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
         mPaint.setColor(mTextColor);
 

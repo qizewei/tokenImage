@@ -5,16 +5,20 @@
     <attr name="textSize" format="dimension" />
     <attr name="speed" format="integer" />
     <attr name="image" format="reference" />
+    <attr name="progress" format="integer"/>
+    <attr name="repeat" format="boolean"/>
     <attr name="imageScaleType">
         <enum name="fillXY" value="0" />
         <enum name="center" value="1" />
     </attr>
 
     <declare-styleable name="tankImageView">
+        <attr name="repeat"/>
         <attr name="textColor" />
         <attr name="textSize" />
         <attr name="speed" />
         <attr name="image" />
+        <attr name="progress"/>
         <attr name="imageScaleType" />
     </declare-styleable>
 
