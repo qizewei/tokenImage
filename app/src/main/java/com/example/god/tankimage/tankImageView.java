@@ -47,6 +47,7 @@ public class tankImageView extends ImageView {
     private int mTextColor;
     private int mTitleTextSize;
     private Rect rect;
+    private boolean isTurn;
 
     public tankImageView(Context context) {
         this(context, null);
@@ -89,13 +90,31 @@ public class tankImageView extends ImageView {
 
         a.recycle();
 
+        /**
+         * 获得绘制文本的宽和高
+         */
+        mPaint = new Paint();
+        rect = new Rect();
+        mPaint.setTextSize(mTitleTextSize);
+        mPaint.setColor(mTextColor);
+        mBound = new Rect();
+
         new Thread() {
             public void run() {
                 while (true) {
                     mProgress++;
-//                    if (mProgress == mWidth) {
-//                        mProgress = 0;
-//                    }
+                    isTurn = true;
+                    for (int i = 0; i < mData.size(); i++) {
+                        if (!mData.get(i).isEnd()) {
+                            isTurn = false;
+                        }
+                    }
+                    if (isTurn) {
+                        mProgress = 0;
+                        for (int i = 0; i < mData.size(); i++) {
+                            mData.get(i).setEnd(false);
+                        }
+                    }
                     postInvalidate();
                     try {
                         Thread.sleep(mSpeed);
@@ -108,14 +127,7 @@ public class tankImageView extends ImageView {
             ;
         }.start();
 
-        /**
-         * 获得绘制文本的宽和高
-         */
-        mPaint = new Paint();
-        rect = new Rect();
-        mPaint.setTextSize(mTitleTextSize);
-        mPaint.setColor(mTextColor);
-        mBound = new Rect();
+
     }
 
     public void setText(String mText) {
@@ -181,9 +193,7 @@ public class tankImageView extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
         int itemHeight = getHeight() / 3;
-        Log.d(TAG, "onDraw: " + itemHeight);
 
         mPaint.setColor(Color.YELLOW);
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
@@ -213,13 +223,12 @@ public class tankImageView extends ImageView {
 
         if (mData.size() != 0) {
             for (int i = 0; i < mData.size(); i++) {
-                Log.d(TAG, "onDrawQ: " + mData.get(i).getProgress());
                 if (!mData.get(i).isEnd()) {
                     int progress = mData.get(i).getProgress() + mProgress;
-                    if (progress == getWidth()) {
+                    if (progress >= mWidth - getPaddingRight()) {
                         mData.get(i).setEnd(true);
                     }
-                    canvas.drawText(mData.get(i).getString(), progress, +itemHeight * mData.get(i).getCount()+ 100, mPaint);
+                    canvas.drawText(mData.get(i).getString(), progress, +itemHeight * mData.get(i).getCount() + 100, mPaint);
                 }
             }
         }
