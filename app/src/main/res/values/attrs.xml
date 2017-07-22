@@ -7,6 +7,8 @@
     <attr name="image" format="reference" />
     <attr name="progress" format="integer"/>
     <attr name="repeat" format="boolean"/>
+    <attr name="rows" format="integer"/>
+    <attr name="space" format="integer"/>
     <attr name="imageScaleType">
         <enum name="fillXY" value="0" />
         <enum name="center" value="1" />
@@ -20,6 +22,8 @@
         <attr name="image" />
         <attr name="progress"/>
         <attr name="imageScaleType" />
+        <attr name="rows"/>
+        <attr name="space"/>
     </declare-styleable>
 
 </resources>

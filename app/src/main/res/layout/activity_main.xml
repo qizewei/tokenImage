@@ -13,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         app:image="@drawable/background"
-
         app:textColor="#fff"
         app:speed="3"
-        app:textSize="20sp" />
+        app:rows="4"
+        app:space="300"
+        app:textSize="50sp" />
 
 </LinearLayout>

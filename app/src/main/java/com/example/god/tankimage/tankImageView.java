@@ -35,15 +35,17 @@ public class tankImageView extends View {
     private int mWidth;
     private int mHeight;
 
-    private int mSpeed;
-    private int mProgress;
+    private int mSpeed = 3;
+    private int mProgress = -700;
     private Bitmap mImage;
-    private int mImageScale;
+    private int mImageScale = 0;
     private static final int IMAGE_SCALE_FITXY = 0;
     private static final int IMAGE_SCALE_CENTER = 1;
     private int mTextColor;
-    private int mTitleTextSize;
-    private boolean mRepeat;
+    private int mTitleTextSize = 17;
+    private boolean mRepeat = true;
+    private int mTankRows = 3;
+    private int mSpace = 300;
 
     private List<dataBean> mData;
     private boolean isTurn;
@@ -85,7 +87,13 @@ public class tankImageView extends View {
                     mProgress = -1 * a.getInteger(attr, 700);
                     break;
                 case R.styleable.tankImageView_repeat:
-                    mRepeat = a.getBoolean(attr,true);
+                    mRepeat = a.getBoolean(attr, true);
+                    break;
+                case R.styleable.tankImageView_rows:
+                    mTankRows = a.getInt(attr, 3);
+                    break;
+                case R.styleable.tankImageView_space:
+                    mSpace = a.getInt(attr, 300);
                     break;
             }
         }
@@ -138,11 +146,11 @@ public class tankImageView extends View {
             double random = Math.random();
             Log.d(TAG, "setLists: " + random);
             //调整条目间隔
-            num -= (int) (random * 200) + 300;
+            num -= (int) (random * mSpace) + mSpace;
             if (i == 0)
-                mData.add(new dataBean(mLists.get(i), -mBound.width(), (int) (random * 3), false));
+                mData.add(new dataBean(mLists.get(i), -mBound.width(), (int) (random * mTankRows), false));
             else
-                mData.add(new dataBean(mLists.get(i), num, (int) (random * 3), false));
+                mData.add(new dataBean(mLists.get(i), num, (int) (random * mTankRows), false));
         }
     }
 
@@ -188,7 +196,7 @@ public class tankImageView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        int itemHeight = getHeight() / 3;
+        int itemHeight = (getHeight()) / mTankRows;
 
         mPaint.setColor(Color.BLACK);
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
@@ -217,8 +225,8 @@ public class tankImageView extends View {
                     if (progress >= mWidth - getPaddingRight()) {
                         mData.get(i).setEnd(true);
                     }
-                    //canvas.drawText(mText, mProgress, getHeight() / 2 + mBound.height() / 2, mPaint);
-                    canvas.drawText(mData.get(i).getString(), progress, +itemHeight * mData.get(i).getCount() + 100, mPaint);
+                    //canvas.drawText(mText, mProgress, getHeight() / 2 , mPaint);
+                    canvas.drawText(mData.get(i).getString(), progress, itemHeight * (mData.get(i).getCount() + 0.9f), mPaint);
                 }
             }
         }
@@ -227,7 +235,7 @@ public class tankImageView extends View {
 
 }
 
-class dataBean {
+    class dataBean {
     String string;
     int progress;
     int count;
