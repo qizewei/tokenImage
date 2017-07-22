@@ -46,6 +46,9 @@ public class tankImageView extends View {
     private boolean mRepeat = true;
     private int mTankRows = 3;
     private int mSpace = 300;
+    private int mDirection = 0;
+    private static final int TANK_DIRECTION_LEFT = 0;
+    private static final int TANK_DIRECTION_RIGHT = 1;
 
     private List<dataBean> mData;
     private boolean isTurn;
@@ -73,6 +76,9 @@ public class tankImageView extends View {
                     break;
                 case R.styleable.tankImageView_imageScaleType:
                     mImageScale = a.getInt(attr, 0);
+                    break;
+                case R.styleable.tankImageView_direction:
+                    mDirection = a.getInt(attr, 0);
                     break;
                 case R.styleable.tankImageView_textColor:
                     mTextColor = a.getColor(attr, Color.WHITE);
@@ -220,13 +226,17 @@ public class tankImageView extends View {
         }
         if (mData.size() != 0) {
             for (int i = 0; i < mData.size(); i++) {
-                if (!mData.get(i).isEnd()) {
-                    int progress = mData.get(i).getProgress() + mProgress;
-                    if (progress >= mWidth - getPaddingRight()) {
-                        mData.get(i).setEnd(true);
+                if (mDirection==0) {
+                    if (!mData.get(i).isEnd()) {
+                        int progress = mData.get(i).getProgress() + mProgress;
+                        if (progress >= mWidth - getPaddingRight()) {
+                            mData.get(i).setEnd(true);
+                        }
+                        //canvas.drawText(mText, mProgress, getHeight() / 2 , mPaint);
+                        canvas.drawText(mData.get(i).getString(), progress, itemHeight * (mData.get(i).getCount() + 0.9f), mPaint);
                     }
-                    //canvas.drawText(mText, mProgress, getHeight() / 2 , mPaint);
-                    canvas.drawText(mData.get(i).getString(), progress, itemHeight * (mData.get(i).getCount() + 0.9f), mPaint);
+                }else {
+                    //TODO: 弹幕从右到左
                 }
             }
         }
