@@ -3,6 +3,9 @@ package com.example.god.tankimage;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -10,6 +13,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tankImageView src = (tankImageView)findViewById(R.id.tank);
-        src.setText("我是子弹");
+        List<String> main = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            main.add(i,"第"+i+"条数据");
+        }
+        src.setLists(main);
     }
 }

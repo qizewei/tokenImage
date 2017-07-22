@@ -14,6 +14,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 
 /**
  * Created by god on 2017/7/21.
@@ -27,7 +31,7 @@ public class tankImageView extends ImageView {
     private Rect mBound;
     private Paint mPaint;
     private int mSpeed = 3;
-    private int mProgress = 0;
+    private int mProgress = -400;
 
     private int mWidth;
     private int mHeight;
@@ -38,6 +42,8 @@ public class tankImageView extends ImageView {
     private static final int IMAGE_SCALE_CENTER = 1;
 
     private String mText;
+    private List<String> mLists;
+    private List<dataBean> mData;
     private int mTextColor;
     private int mTitleTextSize;
     private Rect rect;
@@ -52,6 +58,7 @@ public class tankImageView extends ImageView {
 
     public tankImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mData = new ArrayList<>();
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.tankImageView, defStyleAttr, 0);
         int n = a.getIndexCount();
@@ -86,9 +93,9 @@ public class tankImageView extends ImageView {
             public void run() {
                 while (true) {
                     mProgress++;
-                    if (mProgress == mWidth) {
-                        mProgress = 0;
-                    }
+//                    if (mProgress == mWidth) {
+//                        mProgress = 0;
+//                    }
                     postInvalidate();
                     try {
                         Thread.sleep(mSpeed);
@@ -113,6 +120,23 @@ public class tankImageView extends ImageView {
 
     public void setText(String mText) {
         this.mText = mText;
+    }
+
+
+    public void setLists(List<String> mLists) {
+        this.mLists = mLists;
+        int num = 0;
+        for (int i = 0; i < mLists.size(); i++) {
+            double random = Math.random();
+            Log.d(TAG, "setLists: " + random);
+            num -= (int) (random * 300);
+
+            if (i == 0)
+                mData.add(new dataBean(mLists.get(i), -mBound.width(), (int) (random * 3), false));
+            else
+                mData.add(new dataBean(mLists.get(i), num, (int) (random * 3), false));
+        }
+        Log.d(TAG, "setLists: " + mData.size());
     }
 
     @Override
@@ -157,6 +181,10 @@ public class tankImageView extends ImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
+        int itemHeight = getHeight() / 3;
+        Log.d(TAG, "onDraw: " + itemHeight);
+
         mPaint.setColor(Color.YELLOW);
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
         mPaint.setColor(mTextColor);
@@ -183,8 +211,67 @@ public class tankImageView extends ImageView {
             canvas.drawText(mText, mProgress, getHeight() / 2 + mBound.height() / 2, mPaint);
         }
 
+        if (mData.size() != 0) {
+            for (int i = 0; i < mData.size(); i++) {
+                Log.d(TAG, "onDrawQ: " + mData.get(i).getProgress());
+                if (!mData.get(i).isEnd()) {
+                    int progress = mData.get(i).getProgress() + mProgress;
+                    if (progress == getWidth()) {
+                        mData.get(i).setEnd(true);
+                    }
+                    canvas.drawText(mData.get(i).getString(), progress, +itemHeight * mData.get(i).getCount()+ 100, mPaint);
+                }
+            }
+        }
+
     }
 
+}
+
+class dataBean {
+    String string;
+    int progress;
+    int count;
+    boolean end;
+
+    public dataBean(String string, int progress, int count, boolean end) {
+        this.string = string;
+        this.progress = progress;
+        this.count = count;
+        this.end = end;
+    }
+
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
+    }
+
+    public String getString() {
+        return string;
+    }
+
+    public void setString(String string) {
+        this.string = string;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }
 
 
