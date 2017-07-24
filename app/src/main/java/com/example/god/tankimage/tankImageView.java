@@ -114,6 +114,10 @@ public class tankImageView extends View {
         mPaint.setColor(mTextColor);
         mBound = new Rect();
 
+        if (mDirection ==1) {
+            mProgress = 0;
+        }
+
         new Thread() {
             public void run() {
                 while (true) {
@@ -224,6 +228,7 @@ public class tankImageView extends View {
             rect.bottom = (mHeight - mBound.height()) / 2 + mImage.getHeight() / 2;
             canvas.drawBitmap(mImage, null, rect, mPaint);
         }
+
         if (mData.size() != 0) {
             for (int i = 0; i < mData.size(); i++) {
                 if (mDirection==0) {
@@ -237,6 +242,13 @@ public class tankImageView extends View {
                     }
                 }else {
                     //TODO: 弹幕从右到左
+                    if (!mData.get(i).isEnd()) {
+                        int progress = Math.abs(mData.get(i).getProgress()) + getWidth() - Math.abs(mProgress);
+                        if (progress <= -700) {
+                            mData.get(i).setEnd(true);
+                        }
+                        canvas.drawText(mData.get(i).getString(), progress, itemHeight * (mData.get(i).getCount() + 0.9f), mPaint);
+                    }
                 }
             }
         }

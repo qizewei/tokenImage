@@ -16,6 +16,7 @@
         app:textColor="#fff"
         app:speed="3"
         app:rows="4"
+        app:direction="right"
         app:space="300"
         app:textSize="50sp" />
 
