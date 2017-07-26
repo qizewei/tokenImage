@@ -1,4 +1,4 @@
-package com.example.god.tankimage;
+package com.example.tankimage;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,11 +13,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -70,37 +68,36 @@ public class tankImageView extends View {
         int n = a.getIndexCount();
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
-            switch (attr) {
-                case R.styleable.tankImageView_image:
-                    mImage = BitmapFactory.decodeResource(getResources(), a.getResourceId(attr, 0));
-                    break;
-                case R.styleable.tankImageView_imageScaleType:
-                    mImageScale = a.getInt(attr, 0);
-                    break;
-                case R.styleable.tankImageView_direction:
-                    mDirection = a.getInt(attr, 0);
-                    break;
-                case R.styleable.tankImageView_textColor:
-                    mTextColor = a.getColor(attr, Color.WHITE);
-                    break;
-                case R.styleable.tankImageView_textSize:
-                    mTitleTextSize = a.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, getResources().getDisplayMetrics()));
-                    break;
-                case R.styleable.tankImageView_speed:
-                    mSpeed = a.getInteger(attr, 3);
-                    break;
-                case R.styleable.tankImageView_progress:
-                    mProgress = -1 * a.getInteger(attr, 700);
-                    break;
-                case R.styleable.tankImageView_repeat:
-                    mRepeat = a.getBoolean(attr, true);
-                    break;
-                case R.styleable.tankImageView_rows:
-                    mTankRows = a.getInt(attr, 3);
-                    break;
-                case R.styleable.tankImageView_space:
-                    mSpace = a.getInt(attr, 300);
-                    break;
+            if (attr == R.styleable.tankImageView_image) {
+                mImage = BitmapFactory.decodeResource(getResources(), a.getResourceId(attr, 0));
+
+            } else if (attr == R.styleable.tankImageView_imageScaleType) {
+                mImageScale = a.getInt(attr, 0);
+
+            } else if (attr == R.styleable.tankImageView_direction) {
+                mDirection = a.getInt(attr, 0);
+
+            } else if (attr == R.styleable.tankImageView_textColor) {
+                mTextColor = a.getColor(attr, Color.WHITE);
+
+            } else if (attr == R.styleable.tankImageView_textSize) {
+                mTitleTextSize = a.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, getResources().getDisplayMetrics()));
+
+            } else if (attr == R.styleable.tankImageView_speed) {
+                mSpeed = a.getInteger(attr, 3);
+
+            } else if (attr == R.styleable.tankImageView_progress) {
+                mProgress = -1 * a.getInteger(attr, 700);
+
+            } else if (attr == R.styleable.tankImageView_repeat) {
+                mRepeat = a.getBoolean(attr, true);
+
+            } else if (attr == R.styleable.tankImageView_rows) {
+                mTankRows = a.getInt(attr, 3);
+
+            } else if (attr == R.styleable.tankImageView_space) {
+                mSpace = a.getInt(attr, 300);
+
             }
         }
 

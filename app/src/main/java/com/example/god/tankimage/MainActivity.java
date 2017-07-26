@@ -3,6 +3,8 @@ package com.example.god.tankimage;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.tankimage.tankImageView;
+
 import java.util.ArrayList;
 import java.util.List;
 

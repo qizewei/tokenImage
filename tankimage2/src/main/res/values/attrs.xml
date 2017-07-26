@@ -5,30 +5,30 @@
     <attr name="textSize" format="dimension" />
     <attr name="speed" format="integer" />
     <attr name="image" format="reference" />
-    <attr name="progress" format="integer"/>
-    <attr name="repeat" format="boolean"/>
-    <attr name="rows" format="integer"/>
-    <attr name="space" format="integer"/>
+    <attr name="progress" format="integer" />
+    <attr name="repeat" format="boolean" />
+    <attr name="rows" format="integer" />
+    <attr name="space" format="integer" />
     <attr name="imageScaleType">
         <enum name="fillXY" value="0" />
         <enum name="center" value="1" />
     </attr>
     <attr name="direction">
-        <enum name="left" value="0"/>
-        <enum name="right" value="1"/>
+        <enum name="left" value="0" />
+        <enum name="right" value="1" />
     </attr>
 
     <declare-styleable name="tankImageView">
-        <attr name="direction"/>
-        <attr name="repeat"/>
+        <attr name="direction" />
+        <attr name="repeat" />
         <attr name="textColor" />
         <attr name="textSize" />
         <attr name="speed" />
         <attr name="image" />
-        <attr name="progress"/>
+        <attr name="progress" />
         <attr name="imageScaleType" />
-        <attr name="rows"/>
-        <attr name="space"/>
+        <attr name="rows" />
+        <attr name="space" />
     </declare-styleable>
 
 </resources>
