@@ -41,6 +41,105 @@ public class tankImageView extends View {
     private static final int IMAGE_SCALE_CENTER = 1;
     private int mTextColor;
     private int mTitleTextSize = 17;
+
+    public int getmProgress() {
+        return mProgress;
+    }
+
+    public void setmProgress(int mProgress) {
+        this.mProgress = mProgress;
+    }
+
+    public Bitmap getmImage() {
+        return mImage;
+    }
+
+    public void setmImage(Bitmap mImage) {
+        this.mImage = mImage;
+    }
+
+    public int getmImageScale() {
+        return mImageScale;
+    }
+
+    public void setmImageScale(int mImageScale) {
+        this.mImageScale = mImageScale;
+    }
+
+    public int getmTextColor() {
+        return mTextColor;
+    }
+
+    public void setmTextColor(int mTextColor) {
+        this.mTextColor = mTextColor;
+    }
+
+    public int getmTitleTextSize() {
+        return mTitleTextSize;
+    }
+
+    public void setmTitleTextSize(int mTitleTextSize) {
+        this.mTitleTextSize = mTitleTextSize;
+    }
+
+    public boolean ismRepeat() {
+        return mRepeat;
+    }
+
+    public void setmRepeat(boolean mRepeat) {
+        this.mRepeat = mRepeat;
+    }
+
+    public int getmTankRows() {
+        return mTankRows;
+    }
+
+    public void setmTankRows(int mTankRows) {
+        this.mTankRows = mTankRows;
+    }
+
+    public int getmSpace() {
+        return mSpace;
+    }
+
+    public void setmSpace(int mSpace) {
+        this.mSpace = mSpace;
+    }
+
+    public int getmDirection() {
+        return mDirection;
+    }
+
+    public void setmDirection(int mDirection) {
+        this.mDirection = mDirection;
+    }
+
+    public void setmSpeed(int speed){
+        this.mSpeed = speed;
+    }
+
+    public int getmSpeed(){
+        return mSpeed;
+    }
+
+    /**
+     * 遍历整理数组
+     * @param mLists
+     */
+    public void setLists(List<String> mLists) {
+        int num = 0;
+        for (int i = 0; i < mLists.size(); i++) {
+            double random = Math.random();
+            Log.d(TAG, "setLists: " + random);
+            //调整条目间隔
+            num -= (int) (random * mSpace) + mSpace;
+            if (i == 0)
+                mData.add(new dataBean(mLists.get(i), -mBound.width(), (int) (random * mTankRows), false));
+            else
+                mData.add(new dataBean(mLists.get(i), num, (int) (random * mTankRows), false));
+        }
+    }
+
     private boolean mRepeat = true;
     private int mTankRows = 3;
     private int mSpace = 300;
@@ -154,31 +253,7 @@ public class tankImageView extends View {
         typedArray.recycle();
     }
 
-    /**
-     * 遍历整理数组
-     * @param mLists
-     */
-    public void setLists(List<String> mLists) {
-        int num = 0;
-        for (int i = 0; i < mLists.size(); i++) {
-            double random = Math.random();
-            Log.d(TAG, "setLists: " + random);
-            //调整条目间隔
-            num -= (int) (random * mSpace) + mSpace;
-            if (i == 0)
-                mData.add(new dataBean(mLists.get(i), -mBound.width(), (int) (random * mTankRows), false));
-            else
-                mData.add(new dataBean(mLists.get(i), num, (int) (random * mTankRows), false));
-        }
-    }
 
-    public void setmSpeed(int speed){
-        this.mSpeed = speed;
-    }
-
-    public int getmSpeed(){
-        return mSpeed;
-    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
