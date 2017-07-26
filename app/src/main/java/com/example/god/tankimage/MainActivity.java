@@ -2,13 +2,15 @@ package com.example.god.tankimage;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.tankimage.tankImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +22,11 @@ public class MainActivity extends AppCompatActivity {
             main.add(i,"第"+i+"条数据");
         }
         src.setLists(main);
+        src.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Toast.makeText(this, "点我？", Toast.LENGTH_SHORT).show();
     }
 }

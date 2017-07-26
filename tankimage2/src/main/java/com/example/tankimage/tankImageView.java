@@ -34,7 +34,7 @@ public class tankImageView extends View {
     private int mHeight;
 
     private int mSpeed = 3;
-    private int mProgress = -700;
+    private int mProgress = 0;
     private Bitmap mImage;
     private int mImageScale = 0;
     private static final int IMAGE_SCALE_FITXY = 0;
@@ -50,6 +50,8 @@ public class tankImageView extends View {
 
     private List<dataBean> mData;
     private boolean isTurn;
+    private TypedArray typedArray;
+    private boolean isFirst = true;
 
     public tankImageView(Context context) {
         this(context, null);
@@ -64,56 +66,15 @@ public class tankImageView extends View {
         mData = new ArrayList<>();
 
         //遍历获取XML参数
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.tankImageView, defStyleAttr, 0);
-        int n = a.getIndexCount();
-        for (int i = 0; i < n; i++) {
-            int attr = a.getIndex(i);
-            if (attr == R.styleable.tankImageView_image) {
-                mImage = BitmapFactory.decodeResource(getResources(), a.getResourceId(attr, 0));
+        typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.tankImageView, defStyleAttr, 0);
+        ergodic();
 
-            } else if (attr == R.styleable.tankImageView_imageScaleType) {
-                mImageScale = a.getInt(attr, 0);
-
-            } else if (attr == R.styleable.tankImageView_direction) {
-                mDirection = a.getInt(attr, 0);
-
-            } else if (attr == R.styleable.tankImageView_textColor) {
-                mTextColor = a.getColor(attr, Color.WHITE);
-
-            } else if (attr == R.styleable.tankImageView_textSize) {
-                mTitleTextSize = a.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, getResources().getDisplayMetrics()));
-
-            } else if (attr == R.styleable.tankImageView_speed) {
-                mSpeed = a.getInteger(attr, 3);
-
-            } else if (attr == R.styleable.tankImageView_progress) {
-                mProgress = -1 * a.getInteger(attr, 700);
-
-            } else if (attr == R.styleable.tankImageView_repeat) {
-                mRepeat = a.getBoolean(attr, true);
-
-            } else if (attr == R.styleable.tankImageView_rows) {
-                mTankRows = a.getInt(attr, 3);
-
-            } else if (attr == R.styleable.tankImageView_space) {
-                mSpace = a.getInt(attr, 300);
-
-            }
-        }
-
-        a.recycle();
-        /**
-         * 获得绘制文本的宽和高
-         */
+        //获得绘制文本的宽和高
         mPaint = new Paint();
         rect = new Rect();
         mPaint.setTextSize(mTitleTextSize);
         mPaint.setColor(mTextColor);
         mBound = new Rect();
-
-        if (mDirection ==1) {
-            mProgress = 0;
-        }
 
         new Thread() {
             public void run() {
@@ -128,7 +89,11 @@ public class tankImageView extends View {
                     }
                     //开启循环
                     if (isTurn && mRepeat) {
-                        mProgress = -700;
+                        if (mDirection == 1) {
+                            mProgress = 0;
+                        }else {
+                            mProgress = -700;
+                        }
                         for (int i = 0; i < mData.size(); i++) {
                             mData.get(i).setEnd(false);
                         }
@@ -146,8 +111,54 @@ public class tankImageView extends View {
         }.start();
     }
 
+    /**
+     * 遍历获取XML参数
+     */
+    private void ergodic() {
+        int n = typedArray.getIndexCount();
+        for (int i = 0; i < n; i++) {
+            int attr = typedArray.getIndex(i);
+            if (attr == R.styleable.tankImageView_image) {
+                mImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(attr, 0));
+
+            } else if (attr == R.styleable.tankImageView_imageScaleType) {
+                mImageScale = typedArray.getInt(attr, 0);
+
+            } else if (attr == R.styleable.tankImageView_direction) {
+                mDirection = typedArray.getInt(attr, 0);
+
+            } else if (attr == R.styleable.tankImageView_textColor) {
+                mTextColor = typedArray.getColor(attr, Color.WHITE);
+
+            } else if (attr == R.styleable.tankImageView_textSize) {
+                mTitleTextSize = typedArray.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, getResources().getDisplayMetrics()));
+
+            } else if (attr == R.styleable.tankImageView_speed) {
+                mSpeed = typedArray.getInteger(attr, 3);
+
+            } else if (attr == R.styleable.tankImageView_progress) {
+                mProgress = -1 * typedArray.getInteger(attr, 700);
+
+            } else if (attr == R.styleable.tankImageView_repeat) {
+                mRepeat = typedArray.getBoolean(attr, true);
+
+            } else if (attr == R.styleable.tankImageView_rows) {
+                mTankRows = typedArray.getInt(attr, 3);
+
+            } else if (attr == R.styleable.tankImageView_space) {
+                mSpace = typedArray.getInt(attr, 300);
+
+            }
+        }
+
+        typedArray.recycle();
+    }
+
+    /**
+     * 遍历整理数组
+     * @param mLists
+     */
     public void setLists(List<String> mLists) {
-        //遍历整理数组
         int num = 0;
         for (int i = 0; i < mLists.size(); i++) {
             double random = Math.random();
@@ -180,7 +191,6 @@ public class tankImageView extends View {
             {
                 int desire = Math.max(desireByImg, desireByTitle);
                 mWidth = Math.min(desire, specSize);
-                Log.e("xxx", "AT_MOST");
             }
         }
 
@@ -228,18 +238,25 @@ public class tankImageView extends View {
 
         if (mData.size() != 0) {
             for (int i = 0; i < mData.size(); i++) {
-                if (mDirection==0) {
+                if (mDirection == 0) {
                     if (!mData.get(i).isEnd()) {
+                        if (isFirst) {
+                            mProgress = -700;
+                            isFirst = false;
+                        }
                         int progress = mData.get(i).getProgress() + mProgress;
                         if (progress >= mWidth - getPaddingRight()) {
                             mData.get(i).setEnd(true);
                         }
-                        //canvas.drawText(mText, mProgress, getHeight() / 2 , mPaint);
                         canvas.drawText(mData.get(i).getString(), progress, itemHeight * (mData.get(i).getCount() + 0.9f), mPaint);
                     }
-                }else {
+                } else {
                     //TODO: 弹幕从右到左
                     if (!mData.get(i).isEnd()) {
+                        if (isFirst) {
+                            mProgress = 0;
+                            isFirst = false;
+                        }
                         int progress = Math.abs(mData.get(i).getProgress()) + getWidth() - Math.abs(mProgress);
                         if (progress <= -700) {
                             mData.get(i).setEnd(true);
@@ -254,7 +271,7 @@ public class tankImageView extends View {
 
 }
 
-    class dataBean {
+class dataBean {
     String string;
     int progress;
     int count;
