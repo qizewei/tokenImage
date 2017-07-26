@@ -11,14 +11,32 @@
     <com.example.tankimage.tankImageView
         android:id="@+id/tank"
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-
+        android:layout_height="210dp"
+        android:layout_marginBottom="20dp"
         app:direction="right"
         app:image="@drawable/background"
         app:rows="5"
         app:space="300"
         app:textColor="#fff"
         app:textSize="30sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:onClick="change"
+        android:text="方向"
+        android:textColor="#000"
+        android:textSize="21sp" />
+
+    <com.rey.material.widget.Switch
+        android:id="@+id/direction"
+        style="@style/Material.Widget.Switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:checked="false" />
 
     <TextView
         android:layout_width="match_parent"
@@ -36,22 +54,34 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:gravity="center"
-        android:text="方向"
-        android:textColor="#000"
-        android:onClick="change"
-        android:textSize="21sp" />
-    <com.rey.material.widget.Switch
-        android:id="@+id/direction"
-        style="@style/Material.Widget.Switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:layout_gravity="center_horizontal" />
+        android:orientation="horizontal">
+
+        <com.rey.material.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#"
+            android:textColor="#000"
+            android:textSize="21sp" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/color_edit"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="highlight"
+            android:hint="颜色值" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:onClick="change"
+            android:text="换颜色" />
+    </LinearLayout>
 
 
 </LinearLayout>

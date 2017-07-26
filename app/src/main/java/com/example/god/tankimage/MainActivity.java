@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.example.colorutils.GodUtils;
 import com.example.tankimage.tankImageView;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rey.material.widget.Switch;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, Switch.OnCheckedChangeListener {
 
     private tankImageView src;
+    private MaterialEditText colorText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +35,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         speedSeekBar.setMax(6);
         speedSeekBar.setProgress(3);
         speedSeekBar.setOnSeekBarChangeListener(this);
+
         Switch direction =(Switch)findViewById(R.id.direction);
         direction.setOnCheckedChangeListener(this);
+
+        colorText = (MaterialEditText)findViewById(R.id.color_edit);
     }
 
     @Override
@@ -67,6 +73,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             src.setmDirection(1);
         }else {
             src.setmDirection(0);
+        }
+    }
+
+
+    public void change(View view) {
+        String color = colorText.getText().toString();
+        if (GodUtils.judgeColorString(color)) {
+            src.setmTextColor(GodUtils.StringTransInt(color));
+        }else {
+            Toast.makeText(this, "请输入ARGB格式的颜色值", Toast.LENGTH_SHORT).show();
         }
     }
 }

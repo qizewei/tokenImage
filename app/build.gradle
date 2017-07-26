@@ -29,4 +29,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':tankimage2')
     compile 'com.github.rey5137:material:1.2.4'
+    compile 'com.github.QzwJuHao:ColorUtils:v1.0.0'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
 }

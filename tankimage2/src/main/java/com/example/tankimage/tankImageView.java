@@ -41,6 +41,17 @@ public class tankImageView extends View {
     private static final int IMAGE_SCALE_CENTER = 1;
     private int mTextColor;
     private int mTextSize = 17;
+    private boolean mRepeat = true;
+    private int mTankRows = 5;
+    private int mSpace = 300;
+    private int mDirection = 0;
+    private static final int TANK_DIRECTION_LEFT = 0;
+    private static final int TANK_DIRECTION_RIGHT = 1;
+
+    private List<dataBean> mData;
+    private boolean isTurn;
+    private TypedArray typedArray;
+    private boolean isFirst = true;
 
     public int getmProgress() {
         return mProgress;
@@ -140,18 +151,6 @@ public class tankImageView extends View {
         }
     }
 
-    private boolean mRepeat = true;
-    private int mTankRows = 3;
-    private int mSpace = 300;
-    private int mDirection = 0;
-    private static final int TANK_DIRECTION_LEFT = 0;
-    private static final int TANK_DIRECTION_RIGHT = 1;
-
-    private List<dataBean> mData;
-    private boolean isTurn;
-    private TypedArray typedArray;
-    private boolean isFirst = true;
-
     public tankImageView(Context context) {
         this(context, null);
     }
@@ -242,7 +241,7 @@ public class tankImageView extends View {
                 mRepeat = typedArray.getBoolean(attr, true);
 
             } else if (attr == R.styleable.tankImageView_rows) {
-                mTankRows = typedArray.getInt(attr, 3);
+                mTankRows = typedArray.getInt(attr, 5);
 
             } else if (attr == R.styleable.tankImageView_space) {
                 mSpace = typedArray.getInt(attr, 300);
