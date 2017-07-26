@@ -9,22 +9,49 @@
 
 
     <com.example.tankimage.tankImageView
-        android:layout_marginTop="70dp"
         android:id="@+id/tank"
         android:layout_width="match_parent"
         android:layout_height="190dp"
-        app:image="@drawable/background"
-        app:textColor="#fff"
-        app:speed="3"
-        app:rows="5"
+
         app:direction="right"
+        app:image="@drawable/background"
+        app:rows="5"
         app:space="300"
+        app:textColor="#fff"
         app:textSize="30sp" />
 
-    <Button
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="速度"
+        android:textColor="#000"
+        android:textSize="21sp" />
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/speed_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="方向"
+        android:textColor="#000"
+        android:onClick="change"
+        android:textSize="21sp" />
+    <com.rey.material.widget.Switch
+        android:id="@+id/direction"
+        style="@style/Material.Widget.Switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="设置速度"
-        android:onClick="ADDSPeed"/>
+        android:checked="false"
+        android:layout_gravity="center_horizontal" />
+
 
 </LinearLayout>

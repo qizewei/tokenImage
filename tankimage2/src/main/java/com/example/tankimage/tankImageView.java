@@ -40,7 +40,7 @@ public class tankImageView extends View {
     private static final int IMAGE_SCALE_FITXY = 0;
     private static final int IMAGE_SCALE_CENTER = 1;
     private int mTextColor;
-    private int mTitleTextSize = 17;
+    private int mTextSize = 17;
 
     public int getmProgress() {
         return mProgress;
@@ -74,12 +74,12 @@ public class tankImageView extends View {
         this.mTextColor = mTextColor;
     }
 
-    public int getmTitleTextSize() {
-        return mTitleTextSize;
+    public int getmTextSize() {
+        return mTextSize;
     }
 
-    public void setmTitleTextSize(int mTitleTextSize) {
-        this.mTitleTextSize = mTitleTextSize;
+    public void setmTextSize(int mTextSize) {
+        this.mTextSize = mTextSize;
     }
 
     public boolean ismRepeat() {
@@ -171,7 +171,7 @@ public class tankImageView extends View {
         //获得绘制文本的宽和高
         mPaint = new Paint();
         rect = new Rect();
-        mPaint.setTextSize(mTitleTextSize);
+        mPaint.setTextSize(mTextSize);
         mPaint.setColor(mTextColor);
         mBound = new Rect();
 
@@ -230,7 +230,7 @@ public class tankImageView extends View {
                 mTextColor = typedArray.getColor(attr, Color.WHITE);
 
             } else if (attr == R.styleable.tankImageView_textSize) {
-                mTitleTextSize = typedArray.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, getResources().getDisplayMetrics()));
+                mTextSize = typedArray.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, getResources().getDisplayMetrics()));
 
             } else if (attr == R.styleable.tankImageView_speed) {
                 mSpeed = typedArray.getInteger(attr, 3);
