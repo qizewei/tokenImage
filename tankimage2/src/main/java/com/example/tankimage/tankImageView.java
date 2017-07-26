@@ -172,6 +172,14 @@ public class tankImageView extends View {
         }
     }
 
+    public void setmSpeed(int speed){
+        this.mSpeed = speed;
+    }
+
+    public int getmSpeed(){
+        return mSpeed;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

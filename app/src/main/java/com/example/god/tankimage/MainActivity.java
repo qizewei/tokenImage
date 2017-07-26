@@ -12,11 +12,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private tankImageView src;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tankImageView src = (tankImageView)findViewById(R.id.tank);
+        src = (tankImageView)findViewById(R.id.tank);
         List<String> main = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             main.add(i,"第"+i+"条数据");
@@ -28,5 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         Toast.makeText(this, "点我？", Toast.LENGTH_SHORT).show();
+    }
+
+    public void ADDSPeed(View view) {
+        src.setmSpeed(30);
     }
 }

@@ -4,20 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.god.tankimage.MainActivity">
 
 
     <com.example.tankimage.tankImageView
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="70dp"
         android:id="@+id/tank"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="190dp"
         app:image="@drawable/background"
         app:textColor="#fff"
         app:speed="3"
-        app:rows="4"
+        app:rows="5"
         app:direction="right"
         app:space="300"
-        app:textSize="50sp" />
+        app:textSize="30sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置速度"
+        android:onClick="ADDSPeed"/>
 
 </LinearLayout>
