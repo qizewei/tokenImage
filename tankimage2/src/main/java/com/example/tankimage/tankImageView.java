@@ -125,16 +125,17 @@ public class tankImageView extends View {
         this.mDirection = mDirection;
     }
 
-    public void setmSpeed(int speed){
+    public void setmSpeed(int speed) {
         this.mSpeed = speed;
     }
 
-    public int getmSpeed(){
+    public int getmSpeed() {
         return mSpeed;
     }
 
     /**
      * 遍历整理数组
+     *
      * @param mLists
      */
     public void setLists(List<String> mLists) {
@@ -189,7 +190,7 @@ public class tankImageView extends View {
                     if (isTurn && mRepeat) {
                         if (mDirection == 1) {
                             mProgress = 0;
-                        }else {
+                        } else {
                             mProgress = -700;
                         }
                         for (int i = 0; i < mData.size(); i++) {
@@ -253,7 +254,6 @@ public class tankImageView extends View {
     }
 
 
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -295,6 +295,7 @@ public class tankImageView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //单条弹幕的高度
         int itemHeight = (getHeight()) / mTankRows;
 
         mPaint.setColor(Color.BLACK);
@@ -318,22 +319,26 @@ public class tankImageView extends View {
             canvas.drawBitmap(mImage, null, rect, mPaint);
         }
 
+        //绘制弹幕
         if (mData.size() != 0) {
             for (int i = 0; i < mData.size(); i++) {
+                //判断弹幕方向
                 if (mDirection == 0) {
                     if (!mData.get(i).isEnd()) {
                         if (isFirst) {
+                            //弹幕第一遍播放完成
                             mProgress = -700;
                             isFirst = false;
                         }
+                        //获取弹幕的X轴位置
                         int progress = mData.get(i).getProgress() + mProgress;
                         if (progress >= mWidth - getPaddingRight()) {
+                            //弹幕播放完成
                             mData.get(i).setEnd(true);
                         }
                         canvas.drawText(mData.get(i).getString(), progress, itemHeight * (mData.get(i).getCount() + 0.9f), mPaint);
                     }
                 } else {
-                    //TODO: 弹幕从右到左
                     if (!mData.get(i).isEnd()) {
                         if (isFirst) {
                             mProgress = 0;
@@ -354,10 +359,10 @@ public class tankImageView extends View {
 }
 
 class dataBean {
-    String string;
-    int progress;
-    int count;
-    boolean end;
+    String string;  //弹幕的内容
+    int progress;   //弹幕的初始进度
+    int count;      //弹幕应该出现的第count行
+    boolean end;    //弹幕是否播放结束
 
     public dataBean(String string, int progress, int count, boolean end) {
         this.string = string;

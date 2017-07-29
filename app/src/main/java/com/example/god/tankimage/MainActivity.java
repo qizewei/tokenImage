@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String color = colorText.getText().toString();
         if (GodUtils.judgeColorString(color)) {
             src.setmTextColor(GodUtils.StringTransInt("FF" + color.substring(2)));
+            //已知问题：输入颜色的透明度，也就是前两位为00，会导致ImageView黑屏
         }else {
             Toast.makeText(this, "请输入ARGB格式的颜色值", Toast.LENGTH_SHORT).show();
         }
