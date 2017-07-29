@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void change(View view) {
         String color = colorText.getText().toString();
         if (GodUtils.judgeColorString(color)) {
-            src.setmTextColor(GodUtils.StringTransInt(color));
+            src.setmTextColor(GodUtils.StringTransInt("FF" + color.substring(2)));
         }else {
             Toast.makeText(this, "请输入ARGB格式的颜色值", Toast.LENGTH_SHORT).show();
         }
