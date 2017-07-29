@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         src.setOnClickListener(this);
 
         SeekBar speedSeekBar = (SeekBar)findViewById(R.id.speed_seekbar);
-        speedSeekBar.setMax(6);
+        speedSeekBar.setMax(5);
         speedSeekBar.setProgress(3);
         speedSeekBar.setOnSeekBarChangeListener(this);
 
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
         switch (seekBar.getId()) {
             case R.id.speed_seekbar:
-                src.setmSpeed(i);
+                src.setmSpeed(i + 1);
                 break;
         }
     }

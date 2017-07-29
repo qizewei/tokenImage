@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="210dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp"
         app:direction="right"
         app:image="@drawable/background"
         app:rows="5"
